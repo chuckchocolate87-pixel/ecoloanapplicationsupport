@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #1c1e21;
+      font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .fb-page {
+      min-height: 100vh;
+      width: 100%;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top blue Facebook header bar */
+    .fb-header {
+      background-color: #3b5998;
+      height: 82px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 18%;
+    }
+
+    .fb-btn-follow {
+  text-decoration: none;
+}
+
+    .fb-logo {
+      color: #ffffff;
+      font-family: Tahoma, Arial, "Helvetica Neue", sans-serif;
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Main container */
+    .fb-container {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding-top: 140px;
+      padding-bottom: 60px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    /* Warning card */
+    .fb-box {
+      width: 530px;
+      max-width: 100%;
+      border: 1px solid #3b5998;
+      display: flex;
+      background-color: #ffffff;
+      align-self: flex-start;
+    }
+
+    /* Left blue accent stripe */
+    .fb-stripe {
+      width: 44px;
+      background-color: #2b68cb;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      padding-top: 10px;
+    }
+
+    /* Info circle with 'i' */
+    .fb-info-icon {
+      width: 22px;
+      height: 22px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2b68cb;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-style: italic;
+      font-weight: bold;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Right content */
+    .fb-content {
+      flex: 1;
+      padding: 16px 20px 16px 18px;
+    }
+
+    .fb-heading {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1c1e21;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .fb-subtext {
+      font-size: 12px;
+      color: #1c1e21;
+      margin-bottom: 3px;
+      line-height: 1.4;
+    }
+
+    .fb-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1c1e21;
+      word-break: break-all;
+      line-height: 1.38;
+      margin-bottom: 12px;
+    }
+
+    .fb-question {
+      font-size: 12px;
+      color: #1c1e21;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    /* Action buttons */
+    .fb-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .fb-btn-back,
+    .fb-btn-follow {
+      font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      height: 24px;
+      padding: 0 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 2px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .fb-btn-back {
+      background: linear-gradient(to bottom, #ffffff 0%, #ececec 100%);
+      border: 1px solid #999999;
+      color: #333333;
+    }
+
+    .fb-btn-back:hover {
+      background: #e4e4e4;
+      border-color: #888888;
+    }
+
+    .fb-btn-back:active {
+      background: #dadada;
+    }
+
+    .fb-btn-follow {
+      background: linear-gradient(to bottom, #4c66a4 0%, #3b5998 100%);
+      border: 1px solid #29487d;
+      color: #ffffff;
+    }
+
+    .fb-btn-follow:hover {
+      background: #365899;
+      border-color: #1d3557;
+    }
+
+    .fb-btn-follow:active {
+      background: #2b467b;
+    }
+
+    .fb-icon-arrow {
+      margin-right: 4px;
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fb-page">
+    <!-- Facebook Classic Top Header Bar -->
+    <header class="fb-header">
+      <div class="fb-logo">facebook</div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="fb-container">
+      <div class="fb-box">
+        <!-- Left Blue Stripe with Info Icon -->
+        <div class="fb-stripe">
+          <div class="fb-info-icon">i</div>
+        </div>
+
+        <!-- Right Content Area -->
+        <div class="fb-content">
+          <h1 class="fb-heading">You're going to a link outside Facebook</h1>
+
+          <p class="fb-subtext">The link you tried to go to is outside Facebook:</p>
+
+          <p class="fb-link">
+           
+          </p>
+
+          <p class="fb-question">Are you sure you want to follow this link?</p>
+
+          <!-- Action Buttons -->
+          <div class="fb-buttons">
+            <button type="button" class="fb-btn-back">
+              <span class="fb-icon-arrow">◄</span> Go Back
+            </button>
+            <button type="button" class="fb-btn-follow">
+             <span class="fb-icon-arrow">➜</span> <a href="nextpage.html">Follow Link</a>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+
+</body>
+</html>
